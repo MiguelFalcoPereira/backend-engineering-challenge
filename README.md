@@ -38,8 +38,8 @@ If you don't have an input file prepared, you can quickly create a new one by do
 ### Testing
 To run the tests use the following command:
     
-    python test_analyze_translation.py
-
+    python test_analyze_translation.pypython -m unittest tests.test_analyze_translation
+    
 ### Notes
 
 - I opted to use a **binary search algorithm** because it works more efficiently on already sorted data, while also reducing the total time spent to find the first `translation_delivery` event within the past `window_size` minutes. 

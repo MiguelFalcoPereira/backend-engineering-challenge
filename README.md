@@ -38,7 +38,7 @@ If you don't have an input file prepared, you can quickly create a new one by do
 ### Testing
 To run the tests use the following command:
     
-    python test_analyze_translation.pypython -m unittest tests.test_analyze_translation
+    python -m unittest tests.test_analyze_translation
     
 ### Notes
 

@@ -20,7 +20,7 @@ git clone https://github.com/MiguelFalcoPereira/backend-engineering-challenge.gi
 
 
 ### Usage
-Run the main script to analyze all the translation delivered events within the specified time.
+Run the main script to analyze all the translation delivered events within the specified time. The output of this script will be a file with a timestamp and the calculated average translation delivery time for the last X minutes.
 
     analyze_translation.py --input_file events.json --window_size 10
     

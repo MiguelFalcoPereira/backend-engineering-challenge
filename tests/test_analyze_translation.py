@@ -1,8 +1,10 @@
+import json
+import os
 import unittest
 from datetime import datetime
 
 from analyze_translation import binary_search_nearest, get_correct_slot, create_output_file
-from utils import parse_timestamp
+from utils.utils import parse_timestamp
 
 
 class TestBinarySearchNearest(unittest.TestCase):
@@ -44,6 +46,36 @@ class TestGetCorrectSlot(unittest.TestCase):
         slot = get_correct_slot(event_timestamp, lower_bound_time.second)
         expected_result = datetime.strptime("2024-01-21 16:04:00", "%Y-%m-%d %H:%M:%S")
         self.assertEqual(slot, expected_result)
+
+
+class TestOutput(unittest.TestCase):
+    def setUp(self):
+        # Create sample events for testing
+        self.time_dict = {
+            '2024-01-22 16:33:24': '23',
+            '2024-01-22 16:36:24': '22.5',
+            '2024-01-22 16:39:24': '22',
+            '2024-01-22 16:42:24': '21.5'
+        }
+
+        self.lower_bound_time = '2024-01-22 16:32:24.972341'
+
+        self.window_size = 10
+        self.file_name = 'tests/test_output_file.json'
+
+    def test_create_output_file(self):
+        lower_bound_time = datetime.strptime(self.lower_bound_time, "%Y-%m-%d %H:%M:%S.%f")
+        create_output_file(time_dict=self.time_dict, window_size=self.window_size,
+                           lower_bound_time=lower_bound_time, file_name=self.file_name)
+        with open(self.file_name, 'r') as file:
+            test_output = [json.loads(line.strip()) for line in file]
+        with open('tests/expected_output_file.json', 'r') as file2:
+            expected_output = [json.loads(line.strip()) for line in file2]
+        self.assertEqual(test_output, expected_output)
+        try:
+            os.remove(self.file_name)
+        except OSError as e:
+            print(f"Error removing file '{self.file_name}': {e}")
 
 
 if __name__ == '__main__':

@@ -1,38 +1,50 @@
 # Backend Engineering Challenge
 
 
-Welcome to our Engineering Challenge repository 🖖
+## Translation Analysis Tool
 
-If you found this repository it probably means that you are participating in our recruitment process. Thank you for your time and energy. If that's not the case please take a look at our [openings](https://unbabel.com/careers/) and apply!
+This tool analyzes translation events and calculates the moving average delivery time for the last X minutes.
 
-Please fork this repo before you start working on the challenge, read it careful and take your time and think about the solution. Also, please fork this repository because we will evaluate the code on the fork.
 
-This is an opportunity for us both to work together and get to know each other in a more technical way. If you have any questions please open and issue and we'll reach out to help.
+### Requirements
 
-Good luck!
+- Python (3.7.x or higher recommended)
 
-## Challenge Scenario
 
-At Unbabel we deal with a lot of translation data. One of the metrics we use for our clients' SLAs is the delivery time of a translation. 
+### Installation
 
-In the context of this problem, and to keep things simple, our translation flow is going to be modeled as only one event.
-
-### *translation_delivered*
-
-Example:
-
-```json
-{
-	"timestamp": "2018-12-26 18:12:19.903159",
-	"translation_id": "5aa5b2f39f7254a75aa4",
-	"source_language": "en",
-	"target_language": "fr",
-	"client_name": "airliberty",
-	"event_name": "translation_delivered",
-	"duration": 20,
-	"nr_words": 100
-}
+1. Clone the repository:
+```bash
+git clone https://github.com/MiguelFalcoPereira/backend-engineering-challenge.git
 ```
+
+
+### Usage
+Run the main script to analyze all the translation delivered events within the specified time.
+
+    analyze_translation.py --input_file events.json --window_size 10
+    
+Replace `events.json` with the path to your input file and adjust other parameters as needed:
+
+- `--input_file`: Path to the input file containing translation events (required).
+- `--window_size`: Size of the time window in minutes (default: 10).
+- `--output_file`: Path to the output file to store the results (default: output_file.json).
+
+
+If you don't have an input file prepared, you can quickly create a new one by doing:
+    
+    python data/generate_translation_events.py
+
+### Testing
+To run the tests use the following command:
+    
+    python test_analyze_translation.py
+
+### Notes
+
+- I opted to use a **binary search algorithm** because it works more efficiently on already sorted data, while also reducing the total time spent to find the first `translation_delivery` event within the past `window_size` minutes. 
+Also, this algorithm minimizes the search space by eliminating the need to check if every event happened after the last `window_size` minutes (maximum of half of the total events per iteration).
+
 
 ## Challenge Objective
 

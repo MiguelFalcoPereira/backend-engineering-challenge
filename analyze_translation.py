@@ -2,8 +2,7 @@ import argparse
 import json
 from datetime import datetime, timedelta
 
-from utils import parse_timestamp, format_number
-
+from .analyze_translation_tool.utils import parse_timestamp, format_number
 
 """
     Binary search to find the index of the nearest timestamp after or equal to the target (lower-bound_time).
